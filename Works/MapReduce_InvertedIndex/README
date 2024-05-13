@@ -1,0 +1,81 @@
+# Project #: Project Name
+
+* Author: Farhana Alam
+* Class: CS535 Section 1
+* Semester: Fall 2023
+
+## Overview
+
+The main theme of the project is to improve the Inverted Index MapReduce example. The basic example code 
+was given for this project and we needed to modify the program to a better one. The basic Inverted Index 
+example actually print words from documents with the document names how many times the word was found there like , 
+
+word1   file1, file1, file2, doc1, doc1, doc2
+
+Our initial target was to modify the program to get the inverted index result at least like:
+word1   2  file1, 1  file2, 2  doc1, 1  doc2
+
+Or in a better way by descending word counts:
+word1   2  file1, 2  doc1, 1  file2, 1  doc2
+
+Or even more better way by descending word count and ascending document name:
+word1   2  doc1, 2  file1, 1  doc2, 1  file2
+
+## Reflection
+
+The projective objective was described precisely and nicely understandable. The given example code was helpful 
+for logical understanding and to build up further modification. One of the challenging part for me was to achive the
+specific style of printing the result. The other challenges were for first time running a hadoop MapReduce project
+both on own machine and on cscluster00, quite enjoyable though. It was less desirable to get big chunk of error 
+messages instead of getting syntax error for simple spelling or syntax mistake. But I enjoyed a lot running the 
+Mapreduce on cscluster00 because of its speed.
+
+## Compiling and Using
+
+Assuming HDFS is already running in standalome or pseudo-distributed mood.
+
+#### On your machine go to the directory where you have mapper.py and reducer.py run following commands:
+
+hdfs dfs -put ..path/input   ##(path = input file path, input = input file name)
+
+hadoop jar ~/hadoop-install/hadoop/share/hadoop/tools/lib/hadoop-streaming-*.jar -mapper mapper.py -reducer reducer.py -input input -output output -file ./mapper.py -file ./reducer.py
+
+hdfs dfs -get output
+
+
+To get the time, use this command : time hadoop jar ~/hadoop-install/hadoop/share/hadoop/tools/lib/hadoop-streaming-*.jar -mapper mapper.py -reducer reducer.py -input input -output output -file ./mapper.py -file ./reducer.py
+
+
+#### On cscluster00 go to the directory where you have mapper.py and reducer.py run following commands:
+
+hdfs dfs -put ..path/input   //(path = input file path, input = input file name)
+
+hadoop jar ~amit/hadoop-install/hadoop/share/hadoop/tools/lib/hadoop-streaming-*.jar -mapper mapper.py -reducer reducer.py -input input -output output -file ./mapper.py -file ./reducer.py
+
+hdfs dfs -get output
+
+
+To get the time, use this command : time hadoop jar ~amit/hadoop-install/hadoop/share/hadoop/tools/lib/hadoop-streaming-*.jar -mapper mapper.py -reducer reducer.py -input input -output output -file ./mapper.py -file ./reducer.py
+
+
+## Results 
+
+### For inout from wordcount :
+
+   Timing of my home machine: real: 0m 26.899s , user: 0m 3.261s , sys: 0m 0.239s
+   Timing of cscluster00:     real: 0m 16.709s , user: 0m 7.061s , sys: 0m 0.443s
+   
+### For etext-all:
+
+   Timing of my home machine: real: 10m 35.425s , user: 0m 4.787s , sys: 0m 0.426s
+   Timing of cscluster00:     real:  2m 38.415s , user: 0m 8.210s , sys: 0m 0.577s
+
+## Sources used
+
+To modify the dictionary used help from here :
+https://stackoverflow.com/questions/43488137/how-can-i-do-a-dictionary-format-with-f-string-in-python-3-6
+
+----------
+This README template is using Markdown. Here is a quick cheat sheet on Markdown tags:
+[https://www.markdownguide.org/cheat-sheet/](https://www.markdownguide.org/cheat-sheet/).
+To preview your README.md output, you can view it on GitHub or in eclipse.
