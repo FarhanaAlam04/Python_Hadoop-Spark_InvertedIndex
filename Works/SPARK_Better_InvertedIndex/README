@@ -1,0 +1,63 @@
+# Project #: Project Name
+
+* Author: Farhana Alam
+* Class: CS535 Section 1
+* Semester: Fall 2023
+
+## Overview
+
+The objective of the project is to improve the Inverted Index example to a better way using Spark. Previously we 
+modifyied the Inverted Index example by MapReduce, but this time, the same modification was done by Spark. The basic 
+Inverted Index example actually print words from documents with the document names how many times the word was found there like , 
+
+word1   file1, file1, file2, doc1, doc1, doc2
+
+Our initial target was to modify the program to get the inverted index result at least like:
+word1   2  file1, 1  file2, 2  doc1, 1  doc2
+
+Or in a better way by descending word counts:
+word1   2  file1, 2  doc1, 1  file2, 1  doc2
+
+Or even more better way by descending word count and ascending document name:
+word1   2  doc1, 2  file1, 1  doc2, 1  file2
+
+## Reflection
+
+The **BetterInverted Index** in Spark was challenging because coding have to use Spark functions instead of regular Python/Java codinng. But it was quite enjoyable to see the time difference of **MapReduce solution vs. Spark solution**; Spark solutions were way better in performance than MapReduce solution. 
+
+## Compiling and Using
+
+The program require an folder name of input text files, output folder name, number specification of used threads or all threads using '*'.
+### On Local machine 
+spark-submit --master local[number or *] BetterInvertdIndex.py input output
+### On cscluster00 with Hadoop
+spark-submit --master spark://cscluster00:7077 BetterInvertedIndex.py hdfs://cscluster00:9000/user/username/input 
+      hdfs://cscluster00:9000/user/username/output
+
+For the timing result need to add **'time'** just before the above mentioned compiling commands.
+
+## Results 
+
+### Timing For input:
+MapReduce at home machine          : real: 0m 26.899s , user: 0m 3.261s , sys: 0m 0.239s<br>
+Spark at home machine (all threads): real: 0m 9.866s ,  user: 0m 11.847s , sys: 0m 1.262s<br>
+
+MapReduce(HADOOP)at cscluster00    : real: 0m 16.709s , user: 0m 7.061s , sys: 0m 0.443s<br>
+Spark using HDFS at cscluster00    : real: 0m 13.447s , user: 0m 23.371s , sys: 0m 2.078s<br>
+
+
+### Timing for etext-all:
+MapReduce at home machine          : real: 10m 35.425s , user: 0m 4.787s ,  sys: 0m 0.426s<br>
+Spark at home machine (all threads): real: 2m 54.593s ,  user: 0m 22.747s , sys: 0m 4.721s<br>
+
+MapReduce(HADOOP)at cscluster00    : real:  2m 38.415s , user: 0m 8.210s , sys: 0m 0.577s<br>
+Spark using HDFS at cscluster00    : real: 5m 17.379s , user: 0m 47.296s , sys: 0m 8.492s<br>
+
+## Sources used
+
+N/A
+
+----------
+This README template is using Markdown. Here is a quick cheat sheet on Markdown tags:
+[https://www.markdownguide.org/cheat-sheet/](https://www.markdownguide.org/cheat-sheet/).
+To preview your README.md output, you can view it on GitHub or in eclipse.
